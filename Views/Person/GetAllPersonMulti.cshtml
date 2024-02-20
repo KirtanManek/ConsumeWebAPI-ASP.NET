@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ConsumeWebAPI.Models.PersonModel>
+@{
+	ViewData["Title"] = "GetAllPersonMulti";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Person List</h1>
+<form asp-controller="Person" asp-action="DeleteSelected" method="post">
+	<table class="table table-responsive">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th>Contact</th>
+				<th>Email</th>
+				<th colspan="2" align="center" class="text-center">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td><input type="checkbox" name="selectedPersons" value="@item.PersonID" /></td>
+					<td>@item.Name</td>
+					<td>@item.Contact</td>
+					<td>@item.Email</td>
+					<td align="right"><button class="btn-warning">&nbsp;Edit&nbsp;</button></td>
+					<td align="left"><button class="btn-danger">Delete</button></td>
+				</tr>
+			}
+		<tbody>
+		</tbody>
+	</table>
+	<button type="submit" class="btn btn-danger">Delete Selected</button>
+</form>
+<br />
+<br />
+<form asp-controller="Person" asp-action="ExportExcel">
+	<button type="submit" class="btn btn-primary">Export as Excel</button>
+</form>
