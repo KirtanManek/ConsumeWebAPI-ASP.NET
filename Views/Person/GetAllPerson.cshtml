@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ConsumeWebAPI.Models.PersonModel>
+﻿@* @model IEnumerable<ConsumeWebAPI.Models.PersonModel>
 @{
 	ViewData["Title"] = "GetAllPerson";
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -31,4 +31,66 @@
 <br />
 <form asp-controller="Person" asp-action="ExportExcel">
 	<button type="submit" class="btn btn-primary">Export as Excel</button>
+</form> *@
+@model IEnumerable<ConsumeWebAPI.Models.PersonModel>
+@{
+    ViewData["Title"] = "GetAllPerson";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Person List</h1>
+<table class="table table-responsive" id="personTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th colspan="2" align="center" class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- The table body will be populated dynamically using AJAX -->
+    </tbody>
+</table>
+<br />
+<br />
+<form asp-controller="Person" asp-action="ExportExcel">
+    <button type="submit" class="btn btn-primary">Export as Excel</button>
 </form>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Function to fetch and populate data using AJAX
+            function loadData() {
+                $.ajax({
+                    url: '/Person/ReturnJson',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        // Clear existing table rows
+                        $('#personTable tbody').empty();
+
+                        // Populate table with new data
+                        $.each(data, function (index, item) {
+                            var row = '<tr>' +
+                                '<td>' + item.name + '</td>' +
+                                '<td>' + item.contact + '</td>' +
+                                '<td>' + item.email + '</td>' +
+                                '<td align="right"><button class="btn-warning">&nbsp;Edit&nbsp;</button></td>' +
+                                '<td align="left"><button class="btn-danger">Delete</button></td>' +
+                                '</tr>';
+
+                            $('#personTable tbody').append(row);
+                        });
+                    },
+                    error: function () {
+                        console.error('Error fetching data.');
+                    }
+                });
+            }
+
+            // Initial load of data
+            loadData();
+        });
+    </script>
+}

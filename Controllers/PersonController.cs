@@ -37,8 +37,14 @@ namespace ConsumeWebAPI.Controllers
 		[HttpGet]
 		public IActionResult GetAllPerson()
 		{
-			List<PersonModel> personList = GetPerson();
-			return View("GetAllPerson", personList);
+			//List<PersonModel> personList = GetPerson();
+			return View("GetAllPerson");
+		}
+		
+		public IActionResult ReturnJson()
+		{
+			var persons = GetPerson();
+			return Json(persons);
 		}
 
         [HttpGet]
