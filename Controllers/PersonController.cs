@@ -1,10 +1,12 @@
 ﻿using ClosedXML.Excel;
+using ConsumeWebAPI.DAL;
 using ConsumeWebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace ConsumeWebAPI.Controllers
 {
+	[CheckAccess]
 	public class PersonController : Controller
 	{
 		readonly HttpClient _client;
